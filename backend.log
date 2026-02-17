@@ -1,0 +1,45 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-02-16T11:36:42.585+08:00  INFO 64063 --- [           main] com.qino.log.SystemLogApplication        : Starting SystemLogApplication v1.0.0 using Java 21.0.10 with PID 64063 (/home/wzh/codes/myownWorkspace/system-log-register/backend/target/system-log-register-1.0.0.jar started by wzh in /home/wzh/codes/myownWorkspace/system-log-register/backend)
+2026-02-16T11:36:42.586+08:00 DEBUG 64063 --- [           main] com.qino.log.SystemLogApplication        : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-02-16T11:36:42.587+08:00  INFO 64063 --- [           main] com.qino.log.SystemLogApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-02-16T11:36:43.266+08:00  INFO 64063 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-16T11:36:43.270+08:00  INFO 64063 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-16T11:36:43.271+08:00  INFO 64063 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-02-16T11:36:43.287+08:00  INFO 64063 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-16T11:36:43.287+08:00  INFO 64063 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 650 ms
+2026-02-16T11:36:43.333+08:00  INFO 64063 --- [           main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2026-02-16T11:36:43.648+08:00  INFO 64063 --- [           main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+Initialization Sequence datacenterId:1 workerId:30
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.5 
+2026-02-16T11:36:43.929+08:00  INFO 64063 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-16T11:36:43.933+08:00  INFO 64063 --- [           main] com.qino.log.SystemLogApplication        : Started SystemLogApplication in 1.57 seconds (process running for 1.791)
+2026-02-16T11:36:57.174+08:00  INFO 64063 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-16T11:36:57.175+08:00  INFO 64063 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-16T11:36:57.175+08:00  INFO 64063 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1f661594] was not registered for synchronization because synchronization is not active
+JDBC Connection [com.mysql.cj.jdbc.ConnectionImpl@65b5d345] will not be managed by Spring
+==>  Preparing: SELECT COUNT(*) AS total FROM sys_log WHERE deleted = 0
+==> Parameters: 
+<==    Columns: total
+<==        Row: 3
+<==      Total: 1
+==>  Preparing: SELECT * FROM sys_log WHERE deleted = 0 ORDER BY create_time DESC LIMIT ?
+==> Parameters: 2(Long)
+<==    Columns: id, log_type, title, content, operator, ip_address, request_method, request_url, request_params, response_result, execute_time, status, error_msg, create_time, update_time, deleted
+<==        Row: 3, WARN, 密码错误, <<BLOB>>, 未知用户, 192.168.2.101, POST, /api/login, <<BLOB>>, <<BLOB>>, null, 1, <<BLOB>>, 2026-02-16 11:27:58, 2026-02-16 11:27:58, 0
+<==        Row: 2, INFO, 用户登录, <<BLOB>>, 奇诺, 192.168.2.100, POST, /api/login, <<BLOB>>, <<BLOB>>, null, 0, <<BLOB>>, 2026-02-16 11:27:58, 2026-02-16 11:27:58, 0
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1f661594]

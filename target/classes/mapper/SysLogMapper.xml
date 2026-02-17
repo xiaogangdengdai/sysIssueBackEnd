@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qino.log.mapper.SysLogMapper">
+    
+    <select id="selectLogPage" resultType="com.qino.log.entity.SysLog">
+        SELECT * FROM sys_log
+        <where>
+            deleted = 0
+            <if test="query.logType != null and query.logType != ''">
+                AND log_type = #{query.logType}
+            </if>
+            <if test="query.title != null and query.title != ''">
+                AND title LIKE CONCAT('%', #{query.title}, '%')
+            </if>
+            <if test="query.operator != null and query.operator != ''">
+                AND operator LIKE CONCAT('%', #{query.operator}, '%')
+            </if>
+            <if test="query.status != null">
+                AND status = #{query.status}
+            </if>
+            <if test="query.startTime != null">
+                AND create_time &gt;= #{query.startTime}
+            </if>
+            <if test="query.endTime != null">
+                AND create_time &lt;= #{query.endTime}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+</mapper>
