@@ -90,7 +90,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         attachment.setFileSize(file.getSize());
         attachment.setFileType(file.getContentType());
         attachment.setFileExt(fileExt);
-        attachment.setFileMd5(fileMd5);
+        attachment.setMd5(fileMd5);
         attachment.setType(type != null ? type : 1);
         attachment.setSortOrder(0);
 

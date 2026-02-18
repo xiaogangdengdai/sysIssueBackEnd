@@ -23,6 +23,24 @@ CREATE TABLE IF NOT EXISTS `sys_log` (
     KEY `idx_create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统日志表';
 
+-- 系统问题日志表
+CREATE TABLE IF NOT EXISTS `system_issue_log` (
+    `id` CHAR(36) NOT NULL COMMENT 'ID',
+    `type` TINYINT(3) NULL DEFAULT '1' COMMENT '类型：1.bug修复 2.新功能开发 3.原有功能改造 4.页面原型快速实现',
+    `description` TEXT NULL DEFAULT NULL COMMENT '问题详细描述',
+    `create_table_sql` TEXT NULL DEFAULT NULL COMMENT 'SQL建表语句',
+    `new_requirement` TEXT NULL DEFAULT NULL COMMENT '新需求描述',
+    `before_transformation` TEXT NULL DEFAULT NULL COMMENT '改造前功能描述',
+    `transformation` TEXT NULL DEFAULT NULL COMMENT '改造后的目标',
+    `business_context` TEXT NULL DEFAULT NULL COMMENT '业务介绍',
+    `remark` TEXT NULL DEFAULT NULL COMMENT '备注',
+    `status` TINYINT(3) NULL DEFAULT '1' COMMENT '1:待处理, 2:处理中, 3:已完成, 4:处理失败',
+    `creator` VARCHAR(50) NULL DEFAULT NULL COMMENT '创建人（用户名或ID）',
+    `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_created_at` (`created_at`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统问题登记表';
+
 -- 插入测试数据
 INSERT INTO `sys_log` (`log_type`, `title`, `content`, `operator`, `ip_address`, `request_method`, `request_url`, `status`) VALUES
 ('INFO', '系统启动', '系统日志登记系统启动成功', '系统', '127.0.0.1', 'GET', '/api/health', 0),
