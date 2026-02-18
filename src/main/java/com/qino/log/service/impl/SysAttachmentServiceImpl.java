@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +41,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
     );
 
     @Override
-    public SysAttachment upload(String targetType, String targetId, MultipartFile file) {
+    public SysAttachment upload(String targetType, String targetId, MultipartFile file, Integer type) {
         // 获取原始文件名和扩展名
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.isEmpty()) {
@@ -71,6 +73,14 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             throw new RuntimeException("文件保存失败: " + e.getMessage());
         }
 
+        // 计算文件MD5
+        String fileMd5 = null;
+        try {
+            fileMd5 = calculateMD5(file.getBytes());
+        } catch (IOException e) {
+            // MD5计算失败不影响上传
+        }
+
         // 保存附件记录
         SysAttachment attachment = new SysAttachment();
         attachment.setTargetType(targetType);
@@ -80,6 +90,8 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         attachment.setFileSize(file.getSize());
         attachment.setFileType(file.getContentType());
         attachment.setFileExt(fileExt);
+        attachment.setFileMd5(fileMd5);
+        attachment.setType(type != null ? type : 1);
         attachment.setSortOrder(0);
 
         save(attachment);
@@ -87,13 +99,34 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         return attachment;
     }
 
+    /**
+     * 计算字节数组的MD5值
+     */
+    private String calculateMD5(byte[] bytes) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] digest = md.digest(bytes);
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
+    }
+
     @Override
-    public List<SysAttachment> listByTarget(String targetType, String targetId) {
-        return list(new LambdaQueryWrapper<SysAttachment>()
+    public List<SysAttachment> listByTarget(String targetType, String targetId, Integer type) {
+        LambdaQueryWrapper<SysAttachment> wrapper = new LambdaQueryWrapper<SysAttachment>()
                 .eq(SysAttachment::getTargetType, targetType)
-                .eq(SysAttachment::getTargetId, targetId)
-                .orderByAsc(SysAttachment::getSortOrder)
-                .orderByAsc(SysAttachment::getId));
+                .eq(SysAttachment::getTargetId, targetId);
+        if (type != null) {
+            wrapper.eq(SysAttachment::getType, type);
+        }
+        wrapper.orderByAsc(SysAttachment::getSortOrder)
+               .orderByAsc(SysAttachment::getId);
+        return list(wrapper);
     }
 
     @Override
@@ -112,7 +145,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
 
     @Override
     public void deleteByTarget(String targetType, String targetId) {
-        List<SysAttachment> attachments = listByTarget(targetType, targetId);
+        List<SysAttachment> attachments = listByTarget(targetType, targetId, null);
         for (SysAttachment attachment : attachments) {
             deleteWithFile(attachment.getId());
         }
