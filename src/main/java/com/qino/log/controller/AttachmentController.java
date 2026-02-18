@@ -34,8 +34,9 @@ public class AttachmentController {
     public Result<SysAttachment> upload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("targetType") String targetType,
-            @RequestParam("targetId") String targetId) {
-        SysAttachment attachment = attachmentService.upload(targetType, targetId, file);
+            @RequestParam("targetId") String targetId,
+            @RequestParam(value = "type", defaultValue = "1") Integer type) {
+        SysAttachment attachment = attachmentService.upload(targetType, targetId, file, type);
         return Result.success(attachment);
     }
 
@@ -45,8 +46,9 @@ public class AttachmentController {
     @GetMapping("/list")
     public Result<List<SysAttachment>> list(
             @RequestParam("targetType") String targetType,
-            @RequestParam("targetId") String targetId) {
-        List<SysAttachment> attachments = attachmentService.listByTarget(targetType, targetId);
+            @RequestParam("targetId") String targetId,
+            @RequestParam(value = "type", required = false) Integer type) {
+        List<SysAttachment> attachments = attachmentService.listByTarget(targetType, targetId, type);
         return Result.success(attachments);
     }
 
