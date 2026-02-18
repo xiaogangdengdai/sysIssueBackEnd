@@ -55,6 +55,21 @@ public class SysAttachment {
     private Integer sortOrder;
 
     /**
+     * 类型（1.用户上传 2.系统生成）
+     */
+    private Integer type;
+
+    /**
+     * 文件MD5值
+     */
+    private String md5;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+    /**
      * 上传人
      */
     private String creator;
@@ -64,6 +79,12 @@ public class SysAttachment {
      */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
     /**
      * 删除标记（0未删除 1已删除）
