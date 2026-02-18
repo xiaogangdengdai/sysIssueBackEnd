@@ -5,9 +5,14 @@
     <select id="selectIssueLogPage" resultType="com.qino.log.entity.SystemIssueLog">
         SELECT * FROM system_issue_log
         <where>
-            <if test="query.type != null">
-                AND type = #{query.type}
-            </if>
+            <choose>
+                <when test="query.type != null">
+                    AND type = #{query.type}
+                </when>
+                <otherwise>
+                    AND type IN (1, 2, 3, 4)
+                </otherwise>
+            </choose>
             <if test="query.creator != null and query.creator != ''">
                 AND creator LIKE CONCAT('%', #{query.creator}, '%')
             </if>

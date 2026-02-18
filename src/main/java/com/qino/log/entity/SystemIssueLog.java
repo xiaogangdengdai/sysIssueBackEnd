@@ -17,7 +17,7 @@ public class SystemIssueLog {
     private String id;
 
     /**
-     * 类型：1.bug修复 2.新功能开发 3.原有功能改造 4.页面原型快速实现
+     * 类型：1.bug修复 2.新功能开发 3.原有功能改造 4.页面原型快速实现 5.后台方法深度分析 6.前端功能模块深度分析
      */
     private Integer type;
 

@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `sys_log` (
 -- 系统问题日志表
 CREATE TABLE IF NOT EXISTS `system_issue_log` (
     `id` CHAR(36) NOT NULL COMMENT 'ID',
-    `type` TINYINT(3) NULL DEFAULT '1' COMMENT '类型：1.bug修复 2.新功能开发 3.原有功能改造 4.页面原型快速实现',
+    `type` TINYINT(3) NULL DEFAULT '1' COMMENT '类型：1.bug修复 2.新功能开发 3.原有功能改造 4.页面原型快速实现 5.后台方法深度分析 6.前端功能模块深度分析',
     `description` TEXT NULL DEFAULT NULL COMMENT '问题详细描述',
     `create_table_sql` TEXT NULL DEFAULT NULL COMMENT 'SQL建表语句',
     `new_requirement` TEXT NULL DEFAULT NULL COMMENT '新需求描述',
