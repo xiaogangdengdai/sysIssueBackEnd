@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qino.log.mapper.SystemIssueLogMapper">
-    
+
     <select id="selectIssueLogPage" resultType="com.qino.log.entity.SystemIssueLog">
         SELECT * FROM system_issue_log
         <where>
             <choose>
+                <when test="query.types != null and query.types.size() > 0">
+                    AND type IN
+                    <foreach collection="query.types" item="t" open="(" separator="," close=")">
+                        #{t}
+                    </foreach>
+                </when>
                 <when test="query.type != null">
                     AND type = #{query.type}
                 </when>
-                <otherwise>
-                    AND type IN (1, 2, 3, 4)
-                </otherwise>
             </choose>
             <if test="query.creator != null and query.creator != ''">
                 AND creator LIKE CONCAT('%', #{query.creator}, '%')

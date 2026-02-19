@@ -2,6 +2,7 @@ package com.qino.log.common;
 
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 问题日志查询条件
@@ -17,6 +18,11 @@ public class IssueLogQuery {
      * 类型：1.bug修复 2.新功能开发 3.原有功能改造 4.页面原型快速实现 5.后台方法深度分析 6.前端功能模块深度分析
      */
     private Integer type;
+
+    /**
+     * 类型列表（支持多类型查询）
+     */
+    private List<Integer> types;
 
     /**
      * 创建人

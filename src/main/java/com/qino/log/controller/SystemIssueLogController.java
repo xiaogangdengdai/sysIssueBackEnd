@@ -61,7 +61,10 @@ public class SystemIssueLogController {
         BeanUtils.copyProperties(req, log);
 
         log.setCreatorIp(getClientIp(request));
-        log.setStatus(1);
+        // 只有当status为空时才设置默认值
+        if (log.getStatus() == null) {
+            log.setStatus(1);
+        }
 
         boolean result = service.save(log);
         return result ? Result.success(toVO(log)) : Result.error("新增失败");

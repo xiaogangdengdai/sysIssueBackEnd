@@ -19,6 +19,11 @@ public class SystemIssueLogVO {
     private Integer type;
 
     /**
+     * 问题描述/功能描述
+     */
+    private String description;
+
+    /**
      * SQL建表语句
      */
     private String createTableSql;
