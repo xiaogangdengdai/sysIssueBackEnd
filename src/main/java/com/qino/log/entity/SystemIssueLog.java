@@ -57,6 +57,11 @@ public class SystemIssueLog {
     private String remark;
 
     /**
+     * AI反馈的内容
+     */
+    private String aiResponse;
+
+    /**
      * 状态：1:待处理, 2:处理中, 3:已完成, 4:处理失败
      */
     private Integer status;
